@@ -1,7 +1,7 @@
 package zeeslag.spelelementen;
 
 import org.assertj.core.api.Assertions;
-import org.testng.annotations.Test;
+import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static zeeslag.spelelementen.Bord.BordBuilder.bord;
