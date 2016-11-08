@@ -35,8 +35,16 @@ public class Bord {
         return locaties;
     }
 
-    public Integer getMaxXCoordinaat() {
+    public int getAantalKolommen(){
+        return maxXCoordinaat + 1;
+    }
+
+    public int getMaxXCoordinaat() {
         return maxXCoordinaat;
+    }
+
+    public int getAantalRijen(){
+        return maxYCoordinaat + 1;
     }
 
     public int getMaxYCoordinaat() {

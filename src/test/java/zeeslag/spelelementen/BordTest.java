@@ -15,6 +15,11 @@ public class BordTest {
     }
 
     @Test
+    public void constructor_initialiseertMetStandaard100Locaties(){
+        assertThat(bord().build().getLocaties()).hasSize(100);
+    }
+
+    @Test
     public void constructor_lijstLocatiesWordtingevuld() {
         Bord bord1 = bord().withMaxXCoordinaat(8).withMaxYCoordinaat(8).build();
         Bord bord2 = bord().withMaxXCoordinaat(4).withMaxYCoordinaat(10).build();

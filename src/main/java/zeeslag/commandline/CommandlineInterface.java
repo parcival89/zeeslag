@@ -1,11 +1,12 @@
 package zeeslag.commandline;
 
-import com.google.common.base.Preconditions;
 import zeeslag.spelelementen.Bord;
 
 import java.util.Scanner;
 import java.util.stream.Stream;
 
+import static zeeslag.commandline.CommandlineInterface.LineCreater.slagveldLijn;
+import static zeeslag.commandline.CommandlineInterface.LineCreater.zetOmNaarLetter;
 import static zeeslag.spelelementen.Bord.BordBuilder.bord;
 
 public class CommandlineInterface {
@@ -38,62 +39,17 @@ public class CommandlineInterface {
     }
 
     public static void printBord(Bord bord) {
-        print("Hier is het test bord");
+        String xLegende = LineCreater.xLegende(bord.getAantalKolommen());
+        String scheidingslijn = LineCreater.scheidingslijn(bord.getAantalKolommen());
 
-        print(xLegende(bord.getMaxXCoordinaat()));
-        print(scheidingslijn(bord.getMaxXCoordinaat()));
-        for(int i = 0; i < 8; i++) {
-            print(slagveldLijn(zetOmNaarLetter(i),bord.getMaxXCoordinaat()));
+        print(xLegende);
+        print(scheidingslijn);
+        for(int i = 0; i < bord.getAantalRijen(); i++) {
+            print(slagveldLijn(zetOmNaarLetter(i),bord.getAantalKolommen()));
         }
-        print(scheidingslijn(bord.getMaxXCoordinaat()));
-        print(xLegende(bord.getMaxXCoordinaat()));
+        print(scheidingslijn);
+        print(xLegende);
 
-    }
-
-    public static String zetOmNaarLetter(int omTeZettenGetal) {
-        String alfabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        StringBuilder resultBuilder = new StringBuilder();
-        boolean firstRun = true;
-        do {
-            if(!firstRun){
-                omTeZettenGetal--;
-            }
-            firstRun = false;
-            int deelGetal = omTeZettenGetal % alfabet.length();
-            resultBuilder.append(alfabet.substring(deelGetal, deelGetal + 1));
-            omTeZettenGetal = (omTeZettenGetal - deelGetal) / alfabet.length();
-        }while(omTeZettenGetal >= 1);
-
-        return resultBuilder.reverse().toString();
-    }
-
-    public static String slagveldLijn(String lijnNummer, int legendeMax) {
-        Preconditions.checkNotNull(lijnNummer, "Lijn nummer mag niet Null zijn");
-        String result = String.format("%s |", lijnNummer);
-        for(int i = 0; i < legendeMax; i++){
-            result += " . ";
-        }
-
-        return String.format("%s| %s", result, lijnNummer);
-
-        //return (i+1) + "| .  .  .  .  .  .  .  .  .  . |" + (i+1);
-    }
-
-    public static String scheidingslijn(int legendeMax) {
-        String result = "-- ";
-        for(int i = 0; i < legendeMax; i++){
-            result += "-- ";
-        }
-
-        return result + "--";
-    }
-
-    public static String xLegende(int legendeMax) {
-        String result = "--";
-        for(int i = 1; i <= legendeMax; i++){
-            result += String.format(" %d ", i);
-        }
-        return result + "--";
     }
 
     public static boolean isGeldigeKeuze(int keuze) {
@@ -102,5 +58,51 @@ public class CommandlineInterface {
 
     public static void print(String message){
         System.out.println(message);
+    }
+
+    public static class LineCreater {
+        private static final String alfabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        public static String zetOmNaarLetter(int omTeZettenGetal) {
+            StringBuilder resultBuilder = new StringBuilder();
+            boolean firstRun = true;
+            do {
+                if(!firstRun){
+                    omTeZettenGetal--;
+                }
+                firstRun = false;
+                int deelGetal = omTeZettenGetal % alfabet.length();
+                resultBuilder.append(alfabet.substring(deelGetal, deelGetal + 1));
+                omTeZettenGetal = (omTeZettenGetal - deelGetal) / alfabet.length();
+            }while(omTeZettenGetal >= 1);
+
+            return resultBuilder.reverse().toString();
+        }
+
+        public static String slagveldLijn(String lijnNummer, int legendeMax) {
+            String result = String.format("%s|", lijnNummer);
+            for(int i = 0; i < legendeMax; i++){
+                result += " . ";
+            }
+
+            return String.format("%s|%s", result, lijnNummer);
+        }
+
+        public static String scheidingslijn(int legendeMax) {
+            String result = "-- ";
+            for(int i = 0; i < legendeMax; i++){
+                result += "-- ";
+            }
+
+            return result + "--";
+        }
+
+        public static String xLegende(int legendeMax) {
+            String result = "--";
+            for(int i = 1; i <= legendeMax; i++){
+                result += String.format(" %d ", i);
+            }
+            return result + "--";
+        }
     }
 }
