@@ -1,17 +1,19 @@
 package zeeslag.commandline;
 
+import com.google.common.base.Preconditions;
 import zeeslag.spelelementen.Bord;
 
 import java.util.Scanner;
 import java.util.stream.Stream;
 
+import static zeeslag.spelelementen.Bord.BordBuilder.bord;
+
 public class CommandlineInterface {
 
     public static void main(String[] args) {
-        initApplicatie();
         Scanner scanner = new Scanner(System.in);
         //TODO @Sander gebruik de juiste dimensies
-        Zeeslag huidigSpel = new Zeeslag(new Bord(10,10));
+        Zeeslag huidigSpel = new Zeeslag(bord().build());
 
         print("Welkom bij Zeeslag!!");
 
@@ -24,41 +26,81 @@ public class CommandlineInterface {
             keuze = scanner.nextInt();
         }while(!isGeldigeKeuze(keuze));
 
-        voerKeuzeUit(keuze);
+        voerKeuzeUit(keuze, huidigSpel);
     }
 
-    private static void voerKeuzeUit(int keuze) {
+    public static void voerKeuzeUit(int keuze, Zeeslag zeeslag) {
         if(keuze == GebruikerKeuze.SPEL_STARTEN.getKeuze()){
-            printBord();
+            printBord(zeeslag.getBord());
         }else if (keuze == GebruikerKeuze.AFLSUITEN.getKeuze()){
             System.exit(42);
         }
     }
 
-    private static void printBord() {
+    public static void printBord(Bord bord) {
         print("Hier is het test bord");
 
-        //TODO @Sander: Wacht op Jonas
-        print("-- 1  2  3  4  5  6  7  8  9  10 --");
-        print("-- -- -- -- -- -- -- -- -- -- -- --");
+        print(xLegende(bord.getMaxXCoordinaat()));
+        print(scheidingslijn(bord.getMaxXCoordinaat()));
         for(int i = 0; i < 8; i++) {
-            //TODO @Sander verticale  lijnen moeten alfabetisch zijn
-            print((i+1) + "| .  .  .  .  .  .  .  .  .  . |" + (i+1));
+            print(slagveldLijn(zetOmNaarLetter(i),bord.getMaxXCoordinaat()));
         }
-        print("-- -- -- -- -- -- -- -- -- -- -- --");
-        print("-- 1  2  3  4  5  6  7  8  9  10 --");
+        print(scheidingslijn(bord.getMaxXCoordinaat()));
+        print(xLegende(bord.getMaxXCoordinaat()));
 
     }
 
-    private static boolean isGeldigeKeuze(int keuze) {
+    public static String zetOmNaarLetter(int omTeZettenGetal) {
+        String alfabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        StringBuilder resultBuilder = new StringBuilder();
+        boolean firstRun = true;
+        do {
+            if(!firstRun){
+                omTeZettenGetal--;
+            }
+            firstRun = false;
+            int deelGetal = omTeZettenGetal % alfabet.length();
+            resultBuilder.append(alfabet.substring(deelGetal, deelGetal + 1));
+            omTeZettenGetal = (omTeZettenGetal - deelGetal) / alfabet.length();
+        }while(omTeZettenGetal >= 1);
+
+        return resultBuilder.reverse().toString();
+    }
+
+    public static String slagveldLijn(String lijnNummer, int legendeMax) {
+        Preconditions.checkNotNull(lijnNummer, "Lijn nummer mag niet Null zijn");
+        String result = String.format("%s |", lijnNummer);
+        for(int i = 0; i < legendeMax; i++){
+            result += " . ";
+        }
+
+        return String.format("%s| %s", result, lijnNummer);
+
+        //return (i+1) + "| .  .  .  .  .  .  .  .  .  . |" + (i+1);
+    }
+
+    public static String scheidingslijn(int legendeMax) {
+        String result = "-- ";
+        for(int i = 0; i < legendeMax; i++){
+            result += "-- ";
+        }
+
+        return result + "--";
+    }
+
+    public static String xLegende(int legendeMax) {
+        String result = "--";
+        for(int i = 1; i <= legendeMax; i++){
+            result += String.format(" %d ", i);
+        }
+        return result + "--";
+    }
+
+    public static boolean isGeldigeKeuze(int keuze) {
         return keuze == 1 || keuze == 2;
     }
 
-    private static void print(String message){
+    public static void print(String message){
         System.out.println(message);
-    }
-
-    private static void initApplicatie(){
-
     }
 }
