@@ -1,13 +1,13 @@
 package zeeslag.commandline;
 
-import zeeslag.spelelementen.Bord;
+import zeeslag.spelelementen.bord.Bord;
 
 import java.util.Scanner;
 import java.util.stream.Stream;
 
 import static zeeslag.commandline.CommandlineInterface.LineCreater.slagveldLijn;
 import static zeeslag.commandline.CommandlineInterface.LineCreater.zetOmNaarLetter;
-import static zeeslag.spelelementen.Bord.BordBuilder.bord;
+import static zeeslag.spelelementen.bord.Bord.BordBuilder.bord;
 
 public class CommandlineInterface {
 

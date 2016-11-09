@@ -1,10 +1,9 @@
-package zeeslag.spelelementen;
+package zeeslag.spelelementen.bord;
 
-import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static zeeslag.spelelementen.Bord.BordBuilder.bord;
+import static zeeslag.ZeeslagAssertions.assertThat;
+import static zeeslag.spelelementen.bord.Bord.BordBuilder.bord;
 
 public class BordTest {
 
@@ -15,7 +14,7 @@ public class BordTest {
     }
 
     @Test
-    public void constructor_initialiseertMetStandaard100Locaties(){
+    public void constructor_initialiseertMetStandaard100Locaties() {
         assertThat(bord().build().getLocaties()).hasSize(100);
     }
 
@@ -31,5 +30,19 @@ public class BordTest {
     public void contructor_bordHeeftMaxCoordinaten() {
         Bord bord1 = bord().withMaxXCoordinaat(11).withMaxYCoordinaat(12).build();
         Bord bord2 = bord().withMaxXCoordinaat(15).withMaxYCoordinaat(15).build();
+    }
+
+    @Test
+    public void getAantalRijen_isMaxYCoordinaatPlus1(){
+        Bord bord = bord().build();
+
+        assertThat(bord.getAantalRijen()).isEqualTo(bord.getMaxYCoordinaat() + 1);
+    }
+
+    @Test
+    public void getAantaKolommen_isMaxXCoordinaatPlus1(){
+        Bord bord = bord().build();
+
+        assertThat(bord.getAantalKolommen()).isEqualTo(bord.getMaxXCoordinaat() + 1);
     }
 }

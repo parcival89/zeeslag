@@ -1,6 +1,6 @@
 package zeeslag.commandline;
 
-import zeeslag.spelelementen.Bord;
+import zeeslag.spelelementen.bord.Bord;
 
 public class Zeeslag {
 

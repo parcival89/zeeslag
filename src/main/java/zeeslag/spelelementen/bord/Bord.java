@@ -1,7 +1,11 @@
-package zeeslag.spelelementen;
+package zeeslag.spelelementen.bord;
+
+import zeeslag.spelelementen.bord.locatie.Locatie;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static zeeslag.spelelementen.bord.locatie.Locatie.LocatieBuilder.locatie;
 
 public class Bord {
 
@@ -20,7 +24,7 @@ public class Bord {
         int x = 0;
         int y = 0;
         while (x <= this.maxXCoordinaat && y <= this.maxYCoordinaat) {
-            this.locaties.add(new Locatie(x, y));
+            this.locaties.add(locatie().withXCoordinaat(x).withYCoordinaat(y).build());
             if (x == this.maxXCoordinaat) {
                 x = 0;
                 y++;
