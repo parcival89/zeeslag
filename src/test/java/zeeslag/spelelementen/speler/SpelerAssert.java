@@ -6,7 +6,7 @@ import static zeeslag.ZeeslagAssertions.assertThat;
 
 public class SpelerAssert extends AbstractAssert<SpelerAssert, Speler> {
     public SpelerAssert(Speler actual) {
-        super(actual, Speler.class);
+        super(actual, SpelerAssert.class);
     }
 
     public SpelerAssert heeftNaam(String naam) {

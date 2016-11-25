@@ -6,7 +6,7 @@ import static zeeslag.ZeeslagAssertions.assertThat;
 
 public class LocatieAssert extends AbstractAssert<LocatieAssert, Locatie> {
     public LocatieAssert(Locatie actual) {
-        super(actual, Locatie.class);
+        super(actual, LocatieAssert.class);
     }
 
     public LocatieAssert heeftXCoordinaat(int coordinaat) {

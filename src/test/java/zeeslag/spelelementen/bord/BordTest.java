@@ -15,15 +15,15 @@ public class BordTest {
 
     @Test
     public void constructor_initialiseertMetStandaard100Locaties() {
-        assertThat(bord().build().getLocaties()).hasSize(100);
+        assertThat(bord().build()).heeftAantalLocaties(100);
     }
 
     @Test
     public void constructor_lijstLocatiesWordtingevuld() {
         Bord bord1 = bord().withMaxXCoordinaat(8).withMaxYCoordinaat(8).build();
         Bord bord2 = bord().withMaxXCoordinaat(4).withMaxYCoordinaat(10).build();
-        assertThat(bord1.getLocaties()).hasSize(81);
-        assertThat(bord2.getLocaties()).hasSize(55);
+        assertThat(bord1).heeftAantalLocaties(81);
+        assertThat(bord2).heeftAantalLocaties(55);
     }
 
     @Test

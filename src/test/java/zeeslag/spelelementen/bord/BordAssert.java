@@ -8,7 +8,7 @@ import static zeeslag.ZeeslagAssertions.assertThat;
 public class BordAssert extends AbstractAssert<BordAssert, Bord> {
 
     public BordAssert(Bord actual) {
-        super(actual, Bord.class);
+        super(actual, BordAssert.class);
     }
 
     public BordAssert heeftMaxXCoordinaat(int maxXCoordinaat) {
@@ -28,6 +28,11 @@ public class BordAssert extends AbstractAssert<BordAssert, Bord> {
 
     public BordAssert heeftAantalKolommen(int aantalKolommen) {
         assertThat(actual.getAantalKolommen()).isEqualTo(aantalKolommen);
+        return this;
+    }
+
+    public BordAssert heeftAantalLocaties(int aantalLocaties){
+        assertThat(actual.getLocaties()).hasSize(aantalLocaties);
         return this;
     }
 }
